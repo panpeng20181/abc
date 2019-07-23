@@ -1,0 +1,44 @@
+﻿@model IEnumerable<preview.Models.MongodbModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model._id)
+            </th>*@
+            <th>
+                文件名
+            </th>
+            <th>
+                文件类型
+            </th>
+            <th>
+                MD5
+            </th>
+            <th>
+                预览
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.count)
+                </td>
+                <td>
+                    @Html.ActionLink("pdf", "Create", "Home", new { id = item.count, name1 = item.name,type=1 },new{ target="_blank"})
+                    @Html.ActionLink("html", "Create", "Home", new { id = item.count, name1 = item.name,type=2 },new{ target="_blank"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

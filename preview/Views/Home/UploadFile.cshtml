@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = null;
+}
+@model FileUpload
+<form method="post" action="/Home/Upload" enctype="multipart/form-data">
+    <p>
+        <label>选择文件： </label>
+        <input type="file" id="MyPhoto01" name="MyPhoto01" accept=".docx,.doc,.ppt,.pptx"  asp-for="SelectedFile" />
+    </p>
+    <input type="submit" value="提交" />
+</form>
+

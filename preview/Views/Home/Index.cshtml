@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "文件预览展示";
+}
+
+@model IEnumerable<preview.Models.MongodbModel>
+<style>
+    th, td {
+        padding: 3px;
+    }
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<p>
+    <h3> <a  href="/home/UploadFile" target="_blank">上传文件</a> </h3>
+</p>
+
+<div class="row">
+    <p></p>
+    <div class="col-md-12">
+        <form action="post">
+            <div class="row-fluid">
+                名称:<input type="text" id="dbname" name="dbname2" value="" />
+                <input type="button" asp-controller="MongoDB" asp-action="querymon" id="mongodbtest" value="查询" />
+
+            </div>
+
+            <div class="table table-striped" id="datamain">
+                @Html.Partial("/Views/Shared/part.cshtml", Model)
+            </div>
+        </form>
+        <p></p>
+        <ul id="messages" style="list-style-type:none;"></ul>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#mongodbte").click(function () {
+            var txtNo1 = $("#dbname").val();
+            var txtName1 = "";
+
+            var model = [];
+            model.push($("#dbname").val(), "");
+            $.ajax({
+                url: "/Home/querymongodb",//规定发送请求的 URL。默认是当前页面
+                data: { dbname: model.toString() }, //json时，一定要是key-value.规定要发送到服务器的数据
+                type: "GET",//规定请求的类型（GET 或 POST）。
+                contentType: "json",//"application/json;charset=utf-8",//数据类型必须有，指定发给服务端的数据格式。
+                async: true,//异步处理
+
+                success: function (datas) {
+                    $("#datamain").html(datas);
+                    //console.log(datas);
+                },
+                error: function (datas) {
+                    alert("刷新失败！");
+                }
+
+            });//ajax（）方法要放在事件中调用。
+        });
+    });
+
+    $(document).ready(function () {
+        $("#mongodbtest").click(function () {
+            var txtNo1 = $("#dbname").val();
+            var txtName1 = "";
+
+            var model = [];
+            model.push($("#dbname").val(), "");
+
+            $.ajax({
+                url: "/Home/querymon",//规定发送请求的 URL。默认是当前页面
+                data: { dbname: txtNo1, dbtye: txtName1 }, //json时，一定要是key-value.规定要发送到服务器的数据
+                type: "POST",//规定请求的类型（GET 或 POST）。
+                contentType: "application/x-www-form-urlencoded",//Post用这种类型,//数据类型必须有，指定发给服务端的数据格式。
+                async: true,//异步处理
+
+                success: function (datas) {
+                    $("#datamain").html(datas);
+                    //console.log(datas); .net core 自带log4
+                },
+                error: function (datas) {
+                    alert("刷新失败！");
+                }
+
+            });
+        });
+    });
+</script>
